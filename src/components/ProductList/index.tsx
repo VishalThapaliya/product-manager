@@ -1,10 +1,9 @@
-import { useDispatch, useSelector } from "react-redux"
-import type { RootState } from "../../app/store";
 import { removeProduct } from "../../features/products/productSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 export const ProductList = () => {
-    const dispatch = useDispatch();
-    const products = useSelector((state: RootState) => state.products);
+    const dispatch = useAppDispatch();
+    const products = useAppSelector((state) => state.products);
 
     return (
         <section>

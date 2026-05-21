@@ -1,8 +1,8 @@
-import { useDispatch } from "react-redux"
 import { clearAllProducts } from "../../features/products/productSlice";
+import { useAppDispatch } from "../../hooks/redux";
 
 export const ClearAllButton = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     return (
         <button

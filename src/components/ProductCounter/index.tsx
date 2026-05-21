@@ -1,8 +1,7 @@
-import { useSelector } from "react-redux"
-import type { RootState } from "../../app/store"
+import { useAppSelector } from "../../hooks/redux"
 
 export const ProductCounter = () => {
-    const products = useSelector((state: RootState) => state.products);
+    const products = useAppSelector((state) => state.products);
 
     return (
         <section>

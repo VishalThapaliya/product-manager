@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux";
 import { addProduct } from "../../features/products/productSlice";
+import { useAppDispatch } from "../../hooks/redux";
 
 export const ProductForm = () => {
     const [name, setName] = useState('');
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleAddProduct = () => {
         if(!name.trim()) return;
