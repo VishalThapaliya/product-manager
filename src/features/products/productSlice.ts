@@ -1,27 +1,57 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type Product = {
     id: string;
     name: string;
 }
 
-type ProductState = Product[];
+type ProductState = {
+    items: Product[],
+    loading: boolean,
+    error: string | null
+};
 
-const initialState: ProductState = [];
+const initialState: ProductState = {
+    items: [],
+    loading: false,
+    error: null
+};
+
+export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
+    const response  = await fetch(`https://dummyjson.com/products`);
+    const data = await response.json();
+    return data.products;
+});
 
 export const productSlice = createSlice({
     name: "products",
     initialState,
     reducers: {
         addProduct: (state, action: PayloadAction<Product>) => {
-            state.push(action.payload);
+            state.items.push(action.payload);
         },
         removeProduct: (state, action: PayloadAction<string>) => {
-            return state.filter((product) => product.id !== action.payload);
+            state.items = state.items.filter((product) => product.id !== action.payload);
         },
-        clearAllProducts: () => {
-            return [];
+        clearAllProducts: (state) => {
+            state.items = [];
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchProducts.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        });
+
+        builder.addCase(fetchProducts.fulfilled, (state, action) => {
+            state.loading = false;
+            state.items = action.payload;
+        });
+
+        builder.addCase(fetchProducts.rejected, (state) => {
+            state.loading = false;
+            state.error = "Failed to fetch products"
+        })
     }
 });
 
