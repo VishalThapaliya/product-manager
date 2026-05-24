@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { addProduct } from "../../features/products/productSlice";
+import { addProduct } from "../../features/products";
 import { useAppDispatch } from "../../hooks/redux";
 
 export const ProductForm = () => {

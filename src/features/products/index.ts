@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type Product = {
-    id: string;
-    name: string;
+    id: number;
+    title: string;
 }
 
 type ProductState = {
@@ -30,7 +30,7 @@ export const productSlice = createSlice({
         addProduct: (state, action: PayloadAction<Product>) => {
             state.items.push(action.payload);
         },
-        removeProduct: (state, action: PayloadAction<string>) => {
+        removeProduct: (state, action: PayloadAction<number>) => {
             state.items = state.items.filter((product) => product.id !== action.payload);
         },
         clearAllProducts: (state) => {
