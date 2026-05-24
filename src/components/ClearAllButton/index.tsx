@@ -1,4 +1,4 @@
-import { clearAllProducts } from "../../features/products/productSlice";
+import { clearAllProducts } from "../../features/products";
 import { useAppDispatch } from "../../hooks/redux";
 
 export const ClearAllButton = () => {
