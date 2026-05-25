@@ -1,6 +1,5 @@
 
 import './App.css'
-import { ClearAllButton } from "./components/ClearAllButton"
 import { ProductCounter } from "./components/ProductCounter"
 import { ProductForm } from "./components/ProductForm"
 import { ProductList } from "./components/ProductList"
@@ -11,13 +10,12 @@ function App() {
     <>
       <header>
         <h2>React with Redux ToolKit</h2>
-        <ProductCounter />
+        <ProductForm />
       </header>
       
       <main>
-        <ClearAllButton />
-        <ProductForm />
         <hr />
+        <ProductCounter />
         <ProductList />
       </main>
     </>

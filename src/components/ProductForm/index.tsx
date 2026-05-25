@@ -10,8 +10,8 @@ export const ProductForm = () => {
         if(!name.trim()) return;
 
         const product = {
-            id: Date.now().toString(),
-            name
+            id: Date.now(),
+            title: name
         };
 
         dispatch(addProduct(product));
