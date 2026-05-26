@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { getProducts } from "./ProductService";
 
 type Product = {
     id: number;
@@ -11,17 +12,26 @@ type ProductState = {
     error: string | null
 };
 
+type RejectError = string;
+
 const initialState: ProductState = {
     items: [],
     loading: false,
     error: null
 };
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-    const response  = await fetch(`https://dummyjson.com/products`);
-    const data = await response.json();
-    return data.products;
-});
+export const fetchProducts = createAsyncThunk<Product[], void, { rejectValue: RejectError }>(
+    'products/fetchProducts',
+    async (_, thunkAPI) => {
+        try {
+            return await getProducts();
+        } catch (err) {
+            return thunkAPI.rejectWithValue( 
+                `Failed to get response from the API: ${err}`
+            );
+        }
+    } 
+);
 
 export const productSlice = createSlice({
     name: "products",
@@ -48,9 +58,9 @@ export const productSlice = createSlice({
             state.items = action.payload;
         });
 
-        builder.addCase(fetchProducts.rejected, (state) => {
+        builder.addCase(fetchProducts.rejected, (state, action) => {
             state.loading = false;
-            state.error = "Failed to fetch products"
+            state.error = action.payload ?? "Something went wrong";
         })
     }
 });
